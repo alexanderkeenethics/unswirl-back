@@ -57,7 +57,7 @@ export class AuthService {
       })
 
       console.log({dto});
-      return {user: user.id};
+      return this.signToken(user.id, profile.id);
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         if (error.code === "P2002") {
@@ -76,7 +76,7 @@ export class AuthService {
     }
 
     const secret = this.config.get('JWT_SECRET');
-    const expiresIn =  this.config.get('EXPIRES_IN');
+    //const expiresIn =  this.config.get('EXPIRES_IN');
     const token =  await this.jwt.signAsync(payload, {/*expiresIn,*/secret});
 
     return {'access_token':token};
