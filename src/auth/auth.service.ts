@@ -81,4 +81,11 @@ export class AuthService {
 
     return {'access_token':token};
   }
+
+  validatePhoneNumber(number: string) {
+    console.log("validate number --> ", number);
+    const regexp = new RegExp(/\D+/, 'gi');
+    let clearNumber = number.replaceAll(regexp, "").trim();
+    return clearNumber.length > 6;
+  }
 }

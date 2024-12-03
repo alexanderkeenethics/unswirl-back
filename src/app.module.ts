@@ -5,11 +5,14 @@ import {AppService} from './app.service';
 import {AuthModule} from './auth/auth.module';
 import {PrismaModule} from './prisma/prisma.module';
 import { UserModule } from './user/user.module';
+import { VerificationModule } from './verification/verification.module';
+import { RedisModule } from './redis/redis.module';
+import { SmsModule } from './sms/sms.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
     isGlobal: true,
-  }), AuthModule, PrismaModule, UserModule],
+  }), AuthModule, PrismaModule, UserModule, VerificationModule, RedisModule, SmsModule],
   controllers: [AppController],
   providers: [AppService],
 })
