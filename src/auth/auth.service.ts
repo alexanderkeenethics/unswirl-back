@@ -1,4 +1,4 @@
-import {Body, ForbiddenException, Injectable} from '@nestjs/common';
+import { ForbiddenException, Injectable} from '@nestjs/common';
 import * as argon from 'argon2';
 import {PrismaService} from "../prisma/prisma.service";
 import {SigninDto, SignupDto} from "./dto";
