@@ -1,8 +1,8 @@
-import {BadRequestException, Body, Controller, InternalServerErrorException, Post} from '@nestjs/common';
+import {Body, Controller, Post} from '@nestjs/common';
 import {AuthService} from "./auth.service";
 import {SigninDto, SignupDto} from "./dto";
-import {VerificationService} from "../verification/verification.service";
-import {SmsService} from "../sms/sms.service";
+import {VerificationService} from "@/verification/verification.service";
+import {SmsService} from "@/sms/sms.service";
 
 @Controller('auth')
 export class AuthController {

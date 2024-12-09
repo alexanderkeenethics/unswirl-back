@@ -5,9 +5,9 @@ const ProfileRatingSchema = z.object({
   area: z.nativeEnum(RatingArea),
   value: z.number().min(0).max(10),
 })
-const profileSchema = z.object({
-  name: z.string().trim().min(1).max(64).optional(),
-  bio: z.string().optional(),
+export const profileSchema = z.object({
+  name: z.string().trim().min(1).max(64),
+  bio: z.string(),
   rating: z.array(ProfileRatingSchema).superRefine((ratings, ctx) => {
     const seenAreas = new Set();
     ratings.forEach((rating, index) => {
@@ -21,10 +21,10 @@ const profileSchema = z.object({
         seenAreas.add(rating.area);
       }
     })
-  }).optional(),
-  focus: z.array(z.nativeEnum(RatingArea)).min(1).max(3).optional(),
+  }),
+  focus: z.array(z.nativeEnum(RatingArea)).min(1).max(3),
 });
-export const editProfileSchema = profileSchema.superRefine((profile, ctx) => {
+export const editProfileSchema = profileSchema.partial().superRefine((profile, ctx) => {
    if (!Object.keys(profile).length) {
     ctx.addIssue({
       code: "custom",

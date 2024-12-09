@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "apis": [
+    {
+      "identifier": "airops-developer",
+      "source": "@airops-developer/v1.0#17927832m1s90ouo",
+      "integrity": "sha512-i0p3AJHMbgSYl4UgmE3dC/6iuIDZsQss0yo7oZFOJOU2NmuEdPZrZ3ngbtPTahQLAytw1ySTBIF1IjoWOHxAyQ==",
+      "installerVersion": "6.1.2"
+    }
+  ]
+}

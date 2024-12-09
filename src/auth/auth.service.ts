@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable} from '@nestjs/common';
 import * as argon from 'argon2';
-import {PrismaService} from "../prisma/prisma.service";
+import {PrismaService} from "@/prisma/prisma.service";
 import {SigninDto, SignupDto} from "./dto";
 import {PrismaClientKnownRequestError} from '@prisma/client/runtime/library';
 import {JwtService} from "@nestjs/jwt";
@@ -29,7 +29,7 @@ export class AuthService {
     if (!user.profile.length)
       throw new ForbiddenException("Incorrect profile");
 
-    return this.signToken(user.id, user.profile[0].id);
+    return this.signToken(user.id, user.profile![0].id);
   }
 
   async signup(dto: SignupDto) {

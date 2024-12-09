@@ -8,11 +8,12 @@ import { UserModule } from './user/user.module';
 import { VerificationModule } from './verification/verification.module';
 import { RedisModule } from './redis/redis.module';
 import { SmsModule } from './sms/sms.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
     isGlobal: true,
-  }), AuthModule, PrismaModule, UserModule, VerificationModule, RedisModule, SmsModule],
+  }), AuthModule, PrismaModule, UserModule, VerificationModule, RedisModule, SmsModule, ChatModule],
   controllers: [AppController],
   providers: [AppService],
 })

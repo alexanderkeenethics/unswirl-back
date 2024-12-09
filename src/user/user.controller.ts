@@ -1,9 +1,9 @@
 import {Body, Controller, ForbiddenException, Get, Param, Patch, UseGuards, UsePipes} from '@nestjs/common';
 import {AuthGuard} from "@nestjs/passport";
-import {GetProfile} from "../decorator";
+import {GetProfile} from "@/decorator";
 import {EditProfileDto, editProfileSchema} from "./dto";
-import {UserProfile} from "../types";
-import {ZodValidationPipe} from "../pipes/zodValidationPipe";
+import {UserProfile} from "@/types";
+import {ZodValidationPipe} from "@/pipes/zodValidationPipe";
 import {UserService} from "./user.service";
 
 
