@@ -17,6 +17,8 @@ export class UserService {
         bio: true,
         rating: true,
         focus: true,
+        userTask: true,
+        sessionId: true,
         user: {
           select: {
             id: true,
@@ -30,7 +32,7 @@ export class UserService {
   }
 
   async updateProfileById(profileId: string, updData: EditProfileDto) {
-    const data = {} as Omit<EditProfileDto, "rating">;
+    const data = {} as Omit<EditProfileDto, "rating"|"userTask">;
     Object.keys(updData).forEach(key => {
       if (key !== "rating") {
         data[key] = updData[key];

@@ -1,6 +1,8 @@
 import {z} from 'zod';
 import {RatingArea} from "@prisma/client";
 
+const UserTask = z.object({});
+
 const ProfileRatingSchema = z.object({
   area: z.nativeEnum(RatingArea),
   value: z.number().min(0).max(10),
@@ -23,6 +25,8 @@ export const profileSchema = z.object({
     })
   }),
   focus: z.array(z.nativeEnum(RatingArea)).min(1).max(3),
+  sessionId: z.string().trim().min(1).optional(),
+  userTask: z.array(UserTask).optional(),
 });
 export const editProfileSchema = profileSchema.partial().superRefine((profile, ctx) => {
    if (!Object.keys(profile).length) {

@@ -1,8 +1,3 @@
-import {User} from "@prisma/client";
+import {User, Profile} from "@prisma/client";
 
-export type UserProfile = {
-  "id": string,
-  "name": string,
-  "bio": string|null,
-  "user": Omit<User, 'hash'>
-}
+export type UserProfile = Omit<Profile, "userId"> & {user:  Omit<User, 'hash'>};
