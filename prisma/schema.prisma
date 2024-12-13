@@ -23,13 +23,16 @@ model User {
 }
 
 model Profile {
-  id     String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name   String
-  bio    String?
-  user   User         @relation(fields: [userId], references: [id])
-  userId String       @unique @db.Uuid
-  rating UserRating[]
-  focus  RatingArea[]
+  id        String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name      String
+  bio       String?
+  user      User         @relation(fields: [userId], references: [id])
+  userId    String       @unique @db.Uuid
+  rating    UserRating[]
+  focus     RatingArea[]
+  sessionId String?      @unique
+
+  userTask UserTask[]
 }
 
 model UserRating {
@@ -39,6 +42,19 @@ model UserRating {
   value     Int
 
   @@unique([profileId, area])
+}
+
+model UserTask {
+  id          String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  profile     Profile     @relation(fields: [profileId], references: [id])
+  profileId   String      @db.Uuid
+  description String
+  area        RatingArea?
+
+  parent   UserTask? @relation("ParentChild", fields: [parentId], references: [id])
+  parentId String?   @db.Uuid
+
+  subtask UserTask[] @relation("ParentChild")
 }
 
 enum RatingArea {
