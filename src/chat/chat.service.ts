@@ -1,13 +1,25 @@
 import {Injectable} from '@nestjs/common';
 import {InitialChatDto} from "@/chat/dto";
-import axios, {AxiosRequestConfig} from 'axios';
+import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
 import {ConfigService} from "@nestjs/config";
+
+const AIROPS_PUBLIC_API = "https://api.airops.com/public_api";
+
+async function sendRequest(options: AxiosRequestConfig): Promise<AxiosResponse> {
+  const res = await axios
+      .request(options);
+  if (res.status === 200 && res.data.result) {
+    return res.data.result;
+  } else {
+    throw new Error(res.statusText);
+  }
+}
 
 @Injectable()
 export class ChatService {
   constructor(private config: ConfigService) {}
 
-  async startInitialChat(dto: InitialChatDto) {
+  async sendMessage(dto: InitialChatDto) {
     const options = {
       method: 'POST',
       url: `https://api.airops.com/public_api/agent_apps/${this.config.get('AIROPS_AGENT_UUID')}/chat`,
@@ -31,17 +43,32 @@ export class ChatService {
     }
 
     try {
-      const res = await axios
-          .request(options);
-
-      console.log("createChatInstance --> res.data ", res.data)
-      if (res.status === 200 && res.data.result) {
-        return res.data.result;
-      } else {
-        throw new Error(res.statusText);
-      }
+      const response = await sendRequest(options);
+      console.log("sendMessage --> response ", JSON.stringify(response, null, 2));
+      return response;
     } catch (err) {
-      console.error("createChatInstance --> error ", err);
+      console.error("sendMessage --> error ", err);
+      return false;
+    }
+  }
+
+  async receiveTasks(sessionId: string): Promise<any> {
+    const options = {
+      method: 'POST',
+      url: `${AIROPS_PUBLIC_API}/airops_apps/${this.config.get('AIROPS_WORKFLOW_UUID')}/execute`,
+      headers: {Authorization: `Bearer ${this.config.get('AIROPS_API_KEY')}`, accept: 'application/json', 'content-type': 'application/json'},
+      data: {
+        sessionId
+      }
+    } as AxiosRequestConfig;
+
+
+    try {
+      const response = await sendRequest(options);
+      console.log("receiveTasks --> response ", JSON.stringify(response, null, 2));
+      return response;
+    } catch (err) {
+      console.error("receiveTasks --> error ", err);
       return false;
     }
   }
